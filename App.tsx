@@ -61,7 +61,8 @@ function App(): JSX.Element {
   const test = async () => {
     console.log('click');
     try {
-      const res = await paypalApi.generateToken();
+      const token = await paypalApi.generateToken();
+      const res = await paypalApi.createOrder({token});
       console.log('response', res);
     } catch (e) {
       console.error(e);
