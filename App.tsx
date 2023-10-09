@@ -8,6 +8,7 @@
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -17,13 +18,8 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
+import paypalApi from './src/apis/paypalApi';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -62,6 +58,28 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const test = async () => {
+    console.log('click');
+    try {
+      const res = await paypalApi.generateToken();
+      console.log('response', res);
+    } catch (e) {
+      console.error(e);
+    }
+    // await fetch('http://10.0.2.2:3000/getClientToken', {
+    //   method: 'GET',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'content-type': 'application/json',
+    //   },
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log('response');
+    //     return data;
+    //   });
+  };
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -77,19 +95,14 @@ function App(): JSX.Element {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
+            <Button
+              title="Paypay"
+              color="#0f4fa3"
+              onPress={() => {
+                test();
+              }}
+            />
           </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
         </View>
       </ScrollView>
     </SafeAreaView>
