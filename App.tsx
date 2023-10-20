@@ -22,7 +22,7 @@ function App(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [paypalUrl, setPaypalUrl] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [partnerId, setPartnerId] = useState<string | null>(null);
+  const [partnerId, setPartnerId] = useState<string | null>('HSGJK4DUMPRH2');
   const [partnerUrl, setPartnerUrl] = useState<string | null>(null);
 
   const isDarkMode = useColorScheme() === 'dark';

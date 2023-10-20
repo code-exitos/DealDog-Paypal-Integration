@@ -178,29 +178,23 @@ const capturePayment = async ({
 };
 
 // generate Auth Assertion
-async function authAssertion(sellerPayerId: string): Promise<string> {
+const authAssertion = async (sellerPayerId: string): Promise<string> => {
   const jwt = getAuthAssertionValue(sellerPayerId);
   return jwt;
-}
-function getAuthAssertionValue(sellerPayerId: string) {
+};
+
+const getAuthAssertionValue = (sellerPayerId: string) => {
   const header = {
     alg: 'none',
   };
-  const encodedHeader = base64url(header);
+  const encodedHeader = base64.encode(JSON.stringify(header));
   const payload = {
     iss: clientId,
     payer_id: sellerPayerId,
   };
-  const encodedPayload = base64url(payload);
+  const encodedPayload = base64.encode(JSON.stringify(payload));
   return `${encodedHeader}.${encodedPayload}.`;
-}
-
-function base64url(json: {alg?: string; iss?: string; payer_id?: string}) {
-  return btoa(JSON.stringify(json))
-    .replace(/[=]+$/, '')
-    .replace(/+/g, '-')
-    .replace(/\//g, '_');
-}
+};
 
 const addPartner = async ({token = ''}): Promise<CreateOrderResponse> => {
   const headers = new Headers();
